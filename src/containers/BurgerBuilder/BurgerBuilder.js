@@ -71,6 +71,18 @@ class BurgerBuilder extends React.Component {
     this.setState({ ordered: true });
   };
 
+  handleClearOrder = () => {
+    const ingredients = { ...this.state.ingredients };
+    const cleared = Object.keys(ingredients)
+      .map(el => {
+        return { [el]: 0 };
+      })
+      .reduce((arr, el) => {
+        return (arr = { ...arr, ...el });
+      }, {});
+    this.setState({ ingredients: cleared, totalPrice: 0, purchasable: false });
+  };
+
   modalClose = () => {
     this.setState({ ordered: false });
   };
@@ -102,6 +114,7 @@ class BurgerBuilder extends React.Component {
           totalPrice={this.state.totalPrice}
           purchasable={this.state.purchasable}
           handleOrder={this.handleOrder}
+          handleClearOrder={this.handleClearOrder}
         />
       </Aux>
     );
